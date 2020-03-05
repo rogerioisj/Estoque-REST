@@ -22,6 +22,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
     private static final String TITULO_APPBAR = "Lista de produtos";
     private ListaProdutosAdapter adapter;
     private ProdutoDAO dao;
+    private ProdutoRepository repository;
 
 
     @Override
@@ -36,7 +37,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
         EstoqueDatabase db = EstoqueDatabase.getInstance(this);
         dao = db.getProdutoDAO();
 
-        ProdutoRepository repository = new ProdutoRepository(dao);
+        repository = new ProdutoRepository(dao);
         repository.buscaProdutos(adapter::atualiza);
     }
 
@@ -62,7 +63,9 @@ public class ListaProdutosActivity extends AppCompatActivity {
     }
 
     private void abreFormularioSalvaProduto() {
-        new SalvaProdutoDialog(this, this::salva).mostra();
+        //new SalvaProdutoDialog(this, this::salva).mostra();
+        new SalvaProdutoDialog(this, produtoCriado -> repository.salva(produtoCriado, adapter::adiciona))
+                .mostra();
     }
 
     private void salva(Produto produto) {
