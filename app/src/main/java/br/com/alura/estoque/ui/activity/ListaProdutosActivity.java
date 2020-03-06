@@ -50,7 +50,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
             @Override
             public void quandoFalha(String erro) {
                 Toast.makeText(ListaProdutosActivity.this, "Não foi possível carregar os produtos novos",
-                             Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
