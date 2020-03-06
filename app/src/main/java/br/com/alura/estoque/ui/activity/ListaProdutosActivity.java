@@ -93,27 +93,25 @@ public class ListaProdutosActivity extends AppCompatActivity {
                 .mostra();
     }
 
-    private void salva(Produto produto) {
-        new BaseAsyncTask<>(() -> {
-            long id = dao.salva(produto);
-            return dao.buscaProduto(id);
-        }, produtoSalvo ->
-                adapter.adiciona(produtoSalvo))
-                .execute();
-    }
-
     private void abreFormularioEditaProduto(int posicao, Produto produto) {
         new EditaProdutoDialog(this, produto,
-                produtoEditado -> edita(posicao, produtoEditado))
+                produtoCriado -> repository.edita(produtoCriado,
+                        new ProdutoRepository.DadosCarregadosCallback<Produto>() {
+                            @Override
+                            public void quandoSucesso(Produto produtoEditado) {
+                                adapter.edita(posicao, produtoEditado);
+                            }
+
+                            @Override
+                            public void quandoFalha(String erro) {
+                                Toast.makeText(ListaProdutosActivity.this
+                                        , "Não foi possível editar o produto"
+                                        , Toast.LENGTH_SHORT).show();
+
+                            }
+                        }))
                 .mostra();
     }
 
-    private void edita(int posicao, Produto produto) {
-        new BaseAsyncTask<>(() -> {
-            dao.atualiza(produto);
-            return produto;
-        }, produtoEditado ->
-                adapter.edita(posicao, produtoEditado))
-                .execute();
-    }
+
 }
