@@ -1,16 +1,16 @@
-package br.com.alura.estoque;
+package br.com.alura.estoque.callback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class BaseCallback<T> implements Callback<T> {
+public class CallbackComRetorno<T> implements Callback<T> {
 
 
     private RespostaCallback<T> callback;
 
-    public BaseCallback(RespostaCallback<T> callback) {
+    public CallbackComRetorno(RespostaCallback<T> callback) {
         this.callback = callback;
     }
 

@@ -67,7 +67,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
         repository.remove(produtoRemovido, new ProdutoRepository.DadosCarregadosCallback<Void>() {
             @Override
             public void quandoSucesso(Void resultado) {
-                adapter.remove(produtoRemovido);
+                adapter.remove(posicao);
             }
 
             @Override
