@@ -64,11 +64,18 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
     private void remove(int posicao,
                         Produto produtoRemovido) {
-        new BaseAsyncTask<>(() -> {
-            dao.remove(produtoRemovido);
-            return null;
-        }, resultado -> adapter.remove(posicao))
-                .execute();
+        repository.remove(produtoRemovido, new ProdutoRepository.DadosCarregadosCallback<Void>() {
+            @Override
+            public void quandoSucesso(Void resultado) {
+                adapter.remove(produtoRemovido);
+            }
+
+            @Override
+            public void quandoFalha(String erro) {
+                Toast.makeText(ListaProdutosActivity.this, "Não foi possível remover o produto",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void configuraFabSalvaProduto() {

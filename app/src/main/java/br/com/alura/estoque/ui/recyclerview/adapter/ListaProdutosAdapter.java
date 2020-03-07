@@ -76,9 +76,14 @@ public class ListaProdutosAdapter extends
         notifyItemChanged(posicao);
     }
 
-    public void remove(int posicao) {
+    /*public void remove(int posicao) {
         produtos.remove(posicao);
         notifyItemRemoved(posicao);
+    }*/
+
+    public void remove(Produto produto) {
+        produtos.remove(produto.getId());
+        notifyItemRemoved((int) produto.getId());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
