@@ -11,7 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import br.com.alura.estoque.R;
-import br.com.alura.estoque.asynctask.BaseAsyncTask;
 import br.com.alura.estoque.database.EstoqueDatabase;
 import br.com.alura.estoque.database.dao.ProdutoDAO;
 import br.com.alura.estoque.model.Produto;
@@ -20,9 +19,15 @@ import br.com.alura.estoque.ui.dialog.EditaProdutoDialog;
 import br.com.alura.estoque.ui.dialog.SalvaProdutoDialog;
 import br.com.alura.estoque.ui.recyclerview.adapter.ListaProdutosAdapter;
 
+import static br.com.alura.estoque.ui.activity.ListaProdutosConstantes.ERRO_CARREGA_PRODUTOS;
+import static br.com.alura.estoque.ui.activity.ListaProdutosConstantes.ERRO_EDITA_PRODUTO;
+import static br.com.alura.estoque.ui.activity.ListaProdutosConstantes.ERRO_REMOVE_PRODUTO;
+import static br.com.alura.estoque.ui.activity.ListaProdutosConstantes.ERRO_SALVA_PRODUTO;
+import static br.com.alura.estoque.ui.activity.ListaProdutosConstantes.TITULO_APPBAR;
+
 public class ListaProdutosActivity extends AppCompatActivity {
 
-    private static final String TITULO_APPBAR = "Lista de produtos";
+
     private ListaProdutosAdapter adapter;
     private ProdutoDAO dao;
     private ProdutoRepository repository;
@@ -49,7 +54,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
             @Override
             public void quandoFalha(String erro) {
-                Toast.makeText(ListaProdutosActivity.this, "Não foi possível carregar os produtos novos",
+                Toast.makeText(ListaProdutosActivity.this, ERRO_CARREGA_PRODUTOS,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -72,7 +77,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
             @Override
             public void quandoFalha(String erro) {
-                Toast.makeText(ListaProdutosActivity.this, "Não foi possível remover o produto",
+                Toast.makeText(ListaProdutosActivity.this, ERRO_REMOVE_PRODUTO,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -93,7 +98,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
                     @Override
                     public void quandoFalha(String erro) {
-                        Toast.makeText(ListaProdutosActivity.this, "Não foi possível salvar o produto",
+                        Toast.makeText(ListaProdutosActivity.this, ERRO_SALVA_PRODUTO,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }))
@@ -112,7 +117,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
                             @Override
                             public void quandoFalha(String erro) {
                                 Toast.makeText(ListaProdutosActivity.this
-                                        , "Não foi possível editar o produto"
+                                        , ERRO_EDITA_PRODUTO
                                         , Toast.LENGTH_SHORT).show();
 
                             }

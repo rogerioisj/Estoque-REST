@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EstoqueRetrofit {
 
+    public static final String URL_CLIENT = "http://192.168.15.228:8080/";
     private final ProdutoService produtoService;
 
     public ProdutoService getProdutoService() {
@@ -15,18 +16,22 @@ public class EstoqueRetrofit {
     }
 
     public EstoqueRetrofit() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build();
+        OkHttpClient client = configuraClient();
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.15.228:8080/")
+                .baseUrl(URL_CLIENT)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         produtoService = retrofit.create(ProdutoService.class);
+    }
+
+    private OkHttpClient configuraClient() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
     }
 }
